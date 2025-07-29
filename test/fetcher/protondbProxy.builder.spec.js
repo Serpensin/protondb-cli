@@ -1,5 +1,5 @@
-import { test, describe } from 'node:test'
 import assert from 'node:assert'
+import { describe, test } from 'node:test'
 import { buildUrl } from '../../lib/fetcher/protondbProxy.builder.js'
 
 describe('protondbProxy.buildUrl', () => {
@@ -23,8 +23,14 @@ describe('protondbProxy.buildUrl', () => {
 
   test('buildUrl function must return the final url even if the url params comes without a slash at the end', () => {
     try {
-      const url = buildUrl('https://www.protondb.com/proxy/steam/api/appdetails', '1486440')
-      assert.equal(url, 'https://www.protondb.com/proxy/steam/api/appdetails/?appids=1486440')
+      const url = buildUrl(
+        'https://www.protondb.com/proxy/steam/api/appdetails',
+        '1486440'
+      )
+      assert.equal(
+        url,
+        'https://www.protondb.com/proxy/steam/api/appdetails/?appids=1486440'
+      )
     } catch (error) {
       assert.fail('error is not expected')
     }
@@ -32,8 +38,14 @@ describe('protondbProxy.buildUrl', () => {
 
   test('buildUrl function must return a final url with objectId', () => {
     try {
-      const url = buildUrl('https://www.protondb.com/proxy/steam/api/appdetails/', '1486440')
-      assert.equal(url, 'https://www.protondb.com/proxy/steam/api/appdetails/?appids=1486440')
+      const url = buildUrl(
+        'https://www.protondb.com/proxy/steam/api/appdetails/',
+        '1486440'
+      )
+      assert.equal(
+        url,
+        'https://www.protondb.com/proxy/steam/api/appdetails/?appids=1486440'
+      )
     } catch (error) {
       assert.fail('error is not expected')
     }

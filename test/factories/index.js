@@ -35,19 +35,29 @@
 const random = (min, max) => Math.floor(Math.random() * (max - min)) + min
 
 const dtag = [
-  'Strategy', 'Action',
-  'Survival', 'FPS',
-  'Classic', 'Tactical',
-  'Shooter', 'PvP',
-  'First-Person', 'Multiplayer',
-  'Competitive', 'Old School',
-  'Military', 'Assassin',
-  'eSports', 'Score Attack',
-  'Team-Based', "1990's",
-  '1980s', 'Nostalgia'
+  'Strategy',
+  'Action',
+  'Survival',
+  'FPS',
+  'Classic',
+  'Tactical',
+  'Shooter',
+  'PvP',
+  'First-Person',
+  'Multiplayer',
+  'Competitive',
+  'Old School',
+  'Military',
+  'Assassin',
+  'eSports',
+  'Score Attack',
+  'Team-Based',
+  "1990's",
+  '1980s',
+  'Nostalgia'
 ]
 
-export function createMergedGame (opts) {
+export function createMergedGame(opts) {
   if (!opts.confidence) throw new Error('mock game object needs confidence')
   if (!opts.tier) throw new Error('mock game object needs tier')
   return {
