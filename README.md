@@ -47,3 +47,22 @@ Describe the support of the community under the tier
 docker pull jegj/protondb-cli
 docker run -it --rm jegj/protondb-cli fifa
 ```
+
+## Adding command "protondb" to your terminal
+By adding the following code to your terminal (for example `~/.zshrc`), you can use it pretty easy.
+
+```sh
+protondb() {
+    if [ -z "$1" ]; then
+        echo "Usage: protondb <game_name>"
+        return 1
+    fi
+    docker pull jegj/protondb-cli
+    docker run -it --rm jegj/protondb-cli "$1"
+}
+```
+
+You can also use the following command, to add it automatically into the rc file of your current shell (zsh or bash only).
+```sh
+rc="$HOME/.bashrc"; [ -n "$ZSH_VERSION" ] && rc="$HOME/.zshrc"; grep -q '^protondb()' "$rc" 2>/dev/null && echo "protondb function already exists in $rc – nothing to do." || { printf '\nprotondb() {\n    if [ -z "$1" ]; then\n        echo "Usage: protondb <game_name>"\n        return 1\n    fi\n    docker pull jegj/protondb-cli\n    docker run -it --rm jegj/protondb-cli "$1"\n}\n' >> "$rc" && echo "protondb function has been installed in $rc"; }
+```
