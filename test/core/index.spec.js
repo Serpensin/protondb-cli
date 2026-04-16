@@ -1,8 +1,12 @@
-import { test } from 'node:test'
 import assert from 'node:assert'
-import { fetchAlgoliaMockedData, fetchProtondbMockedData, protondbProxyMock } from '../mock/index.mock.js'
+import { test } from 'node:test'
 import esmock from 'esmock'
 import sinon from 'sinon'
+import {
+  fetchAlgoliaMockedData,
+  fetchProtondbMockedData,
+  protondbProxyMock
+} from '../mock/index.mock.js'
 
 const algoliaUrl = 'https://94he6yatei-dsn.algolia.net/1/indexes/steamdb/query'
 const algoliaApiKey = '9basom4fb297k3Y16cdaec8f5f257088f'
@@ -11,12 +15,22 @@ const protondbUrl = 'https://www.protondb.com/api/v1/reports/summaries'
 const protondbProxyUrl = 'https://www.protondb.com/proxy/steam/api/appdetails'
 const query = 'fifa'
 const hitsPerPage = 5
-const options = { query, hitsPerPage, algoliaApiKey, algoliaApplicationId, algoliaUrl, protondbUrl, protondbProxyUrl }
+const options = {
+  query,
+  hitsPerPage,
+  algoliaApiKey,
+  algoliaApplicationId,
+  algoliaUrl,
+  protondbUrl,
+  protondbProxyUrl
+}
 
 test('getGamesReport must throw an error when Algolia API is not reachable', async () => {
   const core = await esmock('../../lib/core/index.js', {
     '../../lib/fetcher/index.js': {
-      algoliaFetcher: () => { throw new Error('unreachable') }
+      algoliaFetcher: () => {
+        throw new Error('unreachable')
+      }
     }
   })
 
@@ -71,7 +85,7 @@ test('getGamesReport must return an array of objects, the merge from algolia cal
   try {
     const games = await core.getGamesReport(options)
     assert(Array.isArray(games))
-    games.forEach(game => {
+    games.forEach((game) => {
       assert(Object.prototype.hasOwnProperty.call(game, 'lastUpdated'))
       assert(Object.prototype.hasOwnProperty.call(game, 'name'))
       assert(Object.prototype.hasOwnProperty.call(game, 'oslist'))
@@ -100,9 +114,8 @@ test('getGamesReport must return an array of objects, the information from algol
       protondbFetcher: ({ objectId }) => {
         if (objectId === '1313860') {
           return null // 404 from protondb api
-        } else {
-          return fetchProtondbMockedData
         }
+        return fetchProtondbMockedData
       },
       protondbProxyFetcher: () => null
     }
@@ -139,9 +152,8 @@ test('getGamesReport must get data from the protondbProxy API, add it to the alg
       protondbProxyFetcher: ({ appid }) => {
         if (appid !== '72850') {
           return null // 404 from protondbProxy api
-        } else {
-          return protondbProxyMock
         }
+        return protondbProxyMock
       }
     }
   })
@@ -160,8 +172,16 @@ test('getGamesReport must get data from the protondbProxy API, add it to the alg
     Object.prototype.hasOwnProperty.call(games[2], 'objectID')
     Object.prototype.hasOwnProperty.call(games[2], 'tier')
     Object.prototype.hasOwnProperty.call(games[2], 'confidence')
-    Object.prototype.hasOwnProperty.call(games[2], 'recommendations', 'does not have recommendations')
-    Object.prototype.hasOwnProperty.call(games[2], 'genres', 'does not have genres')
+    Object.prototype.hasOwnProperty.call(
+      games[2],
+      'recommendations',
+      'does not have recommendations'
+    )
+    Object.prototype.hasOwnProperty.call(
+      games[2],
+      'genres',
+      'does not have genres'
+    )
   } catch (error) {
     assert.fail('error is not expected')
   }
