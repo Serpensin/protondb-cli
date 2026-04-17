@@ -5,7 +5,7 @@ import { Low } from 'lowdb'
 import { JSONFile } from 'lowdb/node'
 
 export interface CacheData {
-  etags: Record<string, string>
+  etags: Record<string, unknown>
   games: Record<string, unknown>
 }
 
