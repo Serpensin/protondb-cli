@@ -1,11 +1,12 @@
 import assert from 'node:assert'
+import fs from 'node:fs'
 import { test } from 'node:test'
-import { isValidGameName, isValidUrl } from '../lib/utils.js'
+import { debugGameData, isValidGameName, isValidUrl } from '../lib/utils.js'
 
 test('isValidUrl must throw an error when the url param is not a valid URL', () => {
   assert.throws(
     () => {
-      isValidUrl(111)
+      isValidUrl(111 as unknown as string)
     },
     {
       name: 'TypeError',
@@ -15,7 +16,7 @@ test('isValidUrl must throw an error when the url param is not a valid URL', () 
 
   assert.throws(
     () => {
-      isValidUrl(false)
+      isValidUrl(false as unknown as string)
     },
     {
       name: 'TypeError',
@@ -25,7 +26,7 @@ test('isValidUrl must throw an error when the url param is not a valid URL', () 
 
   assert.throws(
     () => {
-      isValidUrl({})
+      isValidUrl({} as unknown as string)
     },
     {
       name: 'TypeError',
@@ -87,7 +88,7 @@ test('isValidGameName must throw an error when the game name is not a valid or e
 
   assert.throws(
     () => {
-      isValidGameName({}, 'for a empty object')
+      isValidGameName({})
     },
     {
       name: 'Error',
@@ -120,4 +121,13 @@ test('isValidGameName must not throw an error when the game name is a valid stri
   assert.doesNotThrow(() => {
     isValidGameName('game1')
   })
+})
+
+test('debugGameData must write the game data to /tmp/debug.json', () => {
+  const gameData = { name: 'test-game', id: 42 }
+  debugGameData(gameData)
+  const written = JSON.parse(
+    fs.readFileSync('/tmp/debug.json', 'utf-8')
+  ) as unknown
+  assert.deepStrictEqual(written, gameData)
 })
