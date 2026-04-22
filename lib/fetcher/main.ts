@@ -23,7 +23,7 @@ const protondbUrl = config.DEFAULT_PROTONDB_URL
 const protondbProxyUrl = config.DEFAULT_PROTONDBPROXY_URL
 
 const query = process.argv[2] ?? 'fifa'
-const hitsPerPage = process.argv[3] ?? 10
+const hitsPerPage = Number(process.argv[3] ?? 10)
 
 const algoliaOptions = {
   query,
@@ -37,12 +37,12 @@ const algoliaOptions = {
     const result = await algoliaFetcher(algoliaOptions)
     checkAlgoliaResponse(result)
   } catch (e) {
-    console.error(e.message)
+    console.error((e as Error).message)
     process.exit(1)
   }
 })()
 
-const protondbOPtions = {
+const protondbOptions = {
   query,
   url: protondbUrl,
   cache: null,
@@ -52,10 +52,10 @@ const protondbOPtions = {
 }
 ;(async () => {
   try {
-    const result = await protondbFetcher(protondbOPtions)
+    const result = await protondbFetcher(protondbOptions)
     checkProtondbResponse(result)
   } catch (e) {
-    console.error(e.message)
+    console.error((e as Error).message)
     process.exit(1)
   }
 })()
@@ -66,7 +66,7 @@ const protondbProxyOptions = { appid: 72850, url: protondbProxyUrl }
     const result = await protondbProxyFetcher(protondbProxyOptions)
     checkProtondbProxyResponse(result, 72850)
   } catch (e) {
-    console.error(e.message)
+    console.error((e as Error).message)
     process.exit(1)
   }
 })()

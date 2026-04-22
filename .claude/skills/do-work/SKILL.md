@@ -32,3 +32,7 @@ npm run test
 ### 5. Commit
 
 Once typecheck and tests pass, commit the work.
+
+### 6. Clean up
+
+Once completed. Close the github issue related to the unit of work. DO NOT close the PRD github issue
