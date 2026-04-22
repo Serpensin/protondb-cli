@@ -1,5 +1,5 @@
-import pMap from 'p-map'
 import type { Low } from 'lowdb'
+import pMap from 'p-map'
 import type { CacheData } from '../cache/index.js'
 import {
   algoliaFetcher,
@@ -62,7 +62,9 @@ export async function getGamesReport(
     url: algoliaUrl
   })
   const algoliaGames = algoliaRaw as AlgoliaResponse
-  const mapper = async (game: AlgoliaGame): Promise<Record<string, unknown> | null> => {
+  const mapper = async (
+    game: AlgoliaGame
+  ): Promise<Record<string, unknown> | null> => {
     const protondbGame = await protondbFetcher({
       query,
       objectId: game.objectID,
@@ -77,7 +79,10 @@ export async function getGamesReport(
       verbose,
       cache
     })
-    const protondbProxyData = protondbProxyResponse as Record<string, { data: Record<string, unknown> }> | null
+    const protondbProxyData = protondbProxyResponse as Record<
+      string,
+      { data: Record<string, unknown> }
+    > | null
     const protondbProxyGame = protondbProxyData?.[game.objectID]?.data
     if (protondbProxyGame) {
       return { ...protondbGame, ...protondbProxyGame }
