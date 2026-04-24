@@ -1,7 +1,7 @@
 {
   "name": "protondb-cli",
   "type": "module",
-  "version": "1.14.0",
+  "version": "1.15.0",
   "description": "CLI for the protondb project",
   "main": "dist/protondb-cli.js",
   "engines": {
@@ -50,8 +50,6 @@
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
     "@types/blessed": "^0.1.25",
     "@types/node": "^22.0.0",
     "@types/sinon": "^17.0.0",
@@ -60,7 +58,6 @@
     "esmock": "^2.6.4",
     "husky": "^8.0.3",
     "markdownlint-cli2": "^0.18.1",
-    "semantic-release": "^24.2.7",
     "sinon": "^17.0.1",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0"
