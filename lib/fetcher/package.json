@@ -1,6 +1,6 @@
 {
   "type": "module",
   "scripts": {
-    "start": "NODE_ENV=development node ./main.js"
+    "start": "NODE_ENV=development tsx ./main.ts"
   }
 }
