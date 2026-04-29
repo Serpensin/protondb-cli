@@ -24,7 +24,7 @@ jobs:
         run: |
           npx -y release-please release-pr \
             --dry-run \
-            --target-branch=main \
+            --target-branch=feat/ts-migration \
             --repo-url=${{ github.server_url }}/${{ github.repository }} \
             --token=$GITHUB_TOKEN \
             --config-file=release-please-config.json \
