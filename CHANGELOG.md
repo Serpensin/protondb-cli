@@ -3,6 +3,15 @@
 
 ### Features
 
+* add start:dev script with tsx watch and update start script for TypeScript build ([6ea53d9](https://github.com/jegj/protondb-cli/commit/6ea53d927abfad5e1e930bdf60992158da245246))
+* migrate lib/process and entry point to TypeScript ([37fa33f](https://github.com/jegj/protondb-cli/commit/37fa33fc391204de14d43cd20ba3cb783f80c825))
+* migrate lib/core/* to TypeScript ([6d9592e](https://github.com/jegj/protondb-cli/commit/6d9592eeac70f189709455f196be0d4a20161c08))
+* migrate lib/presenter/* to TypeScript ([692cfaf](https://github.com/jegj/protondb-cli/commit/692cfafb19df0db12b9956e5a78f603773413956))
+* migrate lib/fetcher/* to TypeScript ([6f3f9f7](https://github.com/jegj/protondb-cli/commit/6f3f9f7dd6b9f176ed4164fa3a6bcdb541141191))
+* migrate lib/cache to TypeScript ([7f84780](https://github.com/jegj/protondb-cli/commit/7f847803628e639a604b4a78cf0fb43264a6a40c))
+* migrate lib/utils and lib/config to TypeScript ([96aac0f](https://github.com/jegj/protondb-cli/commit/96aac0f6bc9a5ccbd6b436db864f42ba8bf7877c))
+* merge toolchain and build infrastructure setup from feat/ts-migration-s1 ([f7d74c6](https://github.com/jegj/protondb-cli/commit/f7d74c6913b4e7db530bdbf96010b73f1058eece))
+* upgrade dependecies and fix vulnerabilities ([caf534c](https://github.com/jegj/protondb-cli/commit/caf534c2a44efdf32ffc9e35cbe9e16edd2d40e5))
 * upgrade dependecies and fix vulnerabilities ([48c8e71](https://github.com/jegj/protondb-cli/commit/48c8e71d7196473be630051844c387f8de6f4534))
 
 # [1.14.0](https://github.com/jegj/protondb-cli/compare/v1.13.1...v1.14.0) (2024-06-26)
