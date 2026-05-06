@@ -5,7 +5,7 @@ import type { CacheData } from '../cache/index.js'
 import getConfig from '../config/index.js'
 import { getGamesReport } from '../core/index.js'
 import type { GameData } from '../presenter/formatter.js'
-import { presentData } from '../presenter/index.js'
+import { presentData, render } from '../presenter/index.js'
 
 export interface ProtondbCLIOptions {
   game: string | null
@@ -14,6 +14,7 @@ export interface ProtondbCLIOptions {
   concurrency: number
   disable_cache: boolean
   clear_cache: boolean
+  json?: boolean
 }
 
 const config = getConfig()
@@ -64,11 +65,21 @@ export default async function start(
     concurrency,
     verbose
   }
-  const result = await oraPromise(getGamesReport(options, cache), {
-    text: `fetching results for "${protondbCLI.game}"`
-  })
+  const fetchPromise = getGamesReport(options, cache)
+  const result = protondbCLI.json
+    ? await fetchPromise
+    : await oraPromise(fetchPromise, {
+        text: `fetching results for "${protondbCLI.game}"`
+      })
   if (cache) {
     await cache.write()
+  }
+  if (protondbCLI.json) {
+    await render(result as unknown as GameData[], {
+      mode: 'json',
+      isTty: process.stdout.isTTY === true
+    })
+    return
   }
   presentData(result as unknown as GameData[])
 }

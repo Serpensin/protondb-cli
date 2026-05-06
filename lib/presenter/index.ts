@@ -3,6 +3,9 @@ import displayGame from './display.js'
 import { format } from './formatter.js'
 import type { GameData } from './formatter.js'
 
+export { render } from './render.js'
+export type { RenderMode, RenderOptions } from './render.js'
+
 let displayGameView: blessed.Widgets.ListTableElement | null = null
 
 const DISPLAY_BLESSED_NODE_INDEX = 1

@@ -67,11 +67,17 @@ const protondbCLI = yargs(argv)
           description: 'Clean up the local cache',
           default: false
         })
+        .option('json', {
+          type: 'boolean',
+          description: 'Emit JSON output (no color, no picker)',
+          default: false
+        })
         .example([
           [
             '$0 gta --concurrency 5 --hits 15',
             'Search the last 15 like gta using a conccurency of 5'
-          ]
+          ],
+          ['$0 fifa --json | jq .[0].name', 'Emit JSON for scripting']
         ])
         .fail((msg: string, err: Error, yargsHelper: Argv) => {
           if (
