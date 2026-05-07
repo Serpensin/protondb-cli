@@ -24,6 +24,35 @@ npm i protondb-cli -g
 protondb-cli "Counter strike"
 ```
 
+When the search returns matches, an inline picker is shown so you can pick a
+game; the selection and result stay in your normal terminal scrollback (no
+full-screen UI). After picking, a short summary is printed by default with the
+game name, tier, confidence, OS list, and user score.
+
+### Flags
+
+| Flag      | Description                                                               |
+| :-------- | :------------------------------------------------------------------------ |
+| `--json`  | Emit machine-readable JSON. No color, no spinner, no picker.              |
+| `-v` / `--verbose` | Verbose logging through to the fetchers.                         |
+| `-h` / `--hits` | Limit the number of search results.                                 |
+| `-c` / `--concurrency` | Limit concurrency for the search.                            |
+| `--disable_cache` | Bypass the local cache.                                           |
+| `--clear_cache` | Wipe the local cache.                                               |
+
+### Piping and scripting
+
+When stdout is not a TTY (e.g. piped into another command), the CLI auto-picks
+the top match and emits a single JSON object — no picker, no color, no spinner.
+This composes cleanly with shell pipelines:
+
+```sh
+protondb-cli "fifa" | jq -r .name
+protondb-cli "Half-Life" --json | jq '.[0].tier'
+```
+
+`NO_COLOR=1` is respected for ANSI-free output.
+
 ### Tiers
 
 Describe the support on Linux with ProtonDB

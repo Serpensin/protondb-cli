@@ -1,11 +1,11 @@
+import { spinner } from '@clack/prompts'
 import type { Low } from 'lowdb'
-import { oraPromise } from 'ora'
 import { createCache } from '../cache/index.js'
 import type { CacheData } from '../cache/index.js'
 import getConfig from '../config/index.js'
 import { getGamesReport } from '../core/index.js'
 import type { GameData } from '../presenter/formatter.js'
-import { presentData, render } from '../presenter/index.js'
+import { type RenderMode, render } from '../presenter/index.js'
 
 export interface ProtondbCLIOptions {
   game: string | null
@@ -18,6 +18,11 @@ export interface ProtondbCLIOptions {
 }
 
 const config = getConfig()
+
+function pickMode(opts: ProtondbCLIOptions): RenderMode {
+  if (opts.json) return 'json'
+  return 'summary'
+}
 
 export default async function start(
   protondbCLI: ProtondbCLIOptions,
@@ -49,37 +54,42 @@ export default async function start(
     'base64'
   ).toString('utf-8')
   const protondbUrl = config.DEFAULT_PROTONDB_URL
-  const query = protondbCLI.game
-  const hitsPerPage = protondbCLI.hits
-  const concurrency = protondbCLI.concurrency
-  const verbose = protondbCLI.verbose
   const protondbProxyUrl = config.DEFAULT_PROTONDBPROXY_URL
+
+  const mode = pickMode(protondbCLI)
+  const isTty = process.stdout.isTTY === true
+  const showSpinner = mode !== 'json' && isTty
+
   const options = {
-    query: query ?? '',
-    hitsPerPage,
+    query: protondbCLI.game ?? '',
+    hitsPerPage: protondbCLI.hits,
     algoliaApiKey,
     algoliaApplicationId,
     algoliaUrl,
     protondbUrl,
     protondbProxyUrl,
-    concurrency,
-    verbose
+    concurrency: protondbCLI.concurrency,
+    verbose: protondbCLI.verbose
   }
-  const fetchPromise = getGamesReport(options, cache)
-  const result = protondbCLI.json
-    ? await fetchPromise
-    : await oraPromise(fetchPromise, {
-        text: `fetching results for "${protondbCLI.game}"`
-      })
+
+  let result: GameData[]
+  if (showSpinner) {
+    const sp = spinner()
+    sp.start(`fetching results for "${protondbCLI.game}"`)
+    try {
+      result = (await getGamesReport(options, cache)) as unknown as GameData[]
+      sp.stop('done')
+    } catch (err) {
+      sp.stop('failed')
+      throw err
+    }
+  } else {
+    result = (await getGamesReport(options, cache)) as unknown as GameData[]
+  }
+
   if (cache) {
     await cache.write()
   }
-  if (protondbCLI.json) {
-    await render(result as unknown as GameData[], {
-      mode: 'json',
-      isTty: process.stdout.isTTY === true
-    })
-    return
-  }
-  presentData(result as unknown as GameData[])
+
+  await render(result, { mode, isTty })
 }

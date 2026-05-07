@@ -1,5 +1,7 @@
 import type { GameData } from './formatter.js'
 import { formatJson } from './json.js'
+import { pickGame } from './picker.js'
+import { formatSummary } from './summary.js'
 
 export type RenderMode = 'summary' | 'card' | 'json'
 
@@ -18,8 +20,9 @@ export async function render(
   options: RenderOptions
 ): Promise<void> {
   const write = options.write ?? defaultWrite
+  const isArray = Array.isArray(data)
 
-  if (Array.isArray(data) && data.length === 0) {
+  if (isArray && data.length === 0) {
     throw new Error('No games found')
   }
 
@@ -29,5 +32,19 @@ export async function render(
     return
   }
 
-  throw new Error(`render mode "${options.mode}" not implemented`)
+  if (!options.isTty) {
+    const game = isArray ? data[0] : data
+    write(formatJson(game))
+    write('\n')
+    return
+  }
+
+  const game = isArray ? await pickGame(data) : data
+
+  if (options.mode === 'card') {
+    throw new Error('render mode "card" not implemented')
+  }
+
+  write(formatSummary(game))
+  write('\n')
 }

@@ -33,3 +33,11 @@ export function confidenceLabel(confidence: string | undefined | null): string {
   if (!colorize) return CONFIDENCE_NA
   return colorize(confidence)
 }
+
+export function fieldKey(text: string): string {
+  return chalk.bold(text)
+}
+
+export function dim(text: string): string {
+  return chalk.dim(text)
+}
