@@ -67,6 +67,12 @@ const protondbCLI = yargs(argv)
           description: 'Clean up the local cache',
           default: false
         })
+        .option('detail', {
+          alias: 'd',
+          type: 'boolean',
+          description: 'Show the full sectioned card instead of the summary',
+          default: false
+        })
         .option('json', {
           type: 'boolean',
           description: 'Emit JSON output (no color, no picker)',
@@ -76,6 +82,10 @@ const protondbCLI = yargs(argv)
           [
             '$0 gta --concurrency 5 --hits 15',
             'Search the last 15 like gta using a conccurency of 5'
+          ],
+          [
+            '$0 "Half-Life" --detail',
+            'Show the full sectioned card after picking'
           ],
           ['$0 fifa --json | jq .[0].name', 'Emit JSON for scripting']
         ])

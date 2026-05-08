@@ -41,3 +41,11 @@ export function fieldKey(text: string): string {
 export function dim(text: string): string {
   return chalk.dim(text)
 }
+
+export function sectionHeader(text: string): string {
+  return chalk.bold.cyan(text)
+}
+
+export function urlText(text: string): string {
+  return chalk.underline.blue(text)
+}

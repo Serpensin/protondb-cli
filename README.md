@@ -33,12 +33,17 @@ game name, tier, confidence, OS list, and user score.
 
 | Flag      | Description                                                               |
 | :-------- | :------------------------------------------------------------------------ |
+| `-d` / `--detail` | Show the full sectioned card (Identity, Compatibility, Metadata, Requirements) instead of the summary. |
 | `--json`  | Emit machine-readable JSON. No color, no spinner, no picker.              |
 | `-v` / `--verbose` | Verbose logging through to the fetchers.                         |
 | `-h` / `--hits` | Limit the number of search results.                                 |
 | `-c` / `--concurrency` | Limit concurrency for the search.                            |
 | `--disable_cache` | Bypass the local cache.                                           |
 | `--clear_cache` | Wipe the local cache.                                               |
+
+```sh
+protondb-cli "Half-Life" --detail
+```
 
 ### Piping and scripting
 

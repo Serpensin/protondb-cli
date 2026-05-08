@@ -141,17 +141,32 @@ describe('render', () => {
     assert.equal(parsed.name, mergedGameDataComplete.name)
   })
 
-  test('throws not-implemented for card mode (slice #112)', async () => {
+  test('TTY card mode runs the picker and emits the card', async () => {
+    const writes: string[] = []
     const { render } = await loadRender()
-    await assert.rejects(
-      () =>
-        render(mergedGameDataComplete, {
-          mode: 'card',
-          isTty: true,
-          write: () => {}
-        }),
-      /not implemented/i
-    )
+    await render(mergedGames, {
+      mode: 'card',
+      isTty: true,
+      write: (text: string) => writes.push(text)
+    })
+    const out = writes.join('')
+    assert.match(out, /Identity/)
+    assert.match(out, /Compatibility/)
+    assert.match(out, /Metadata/)
+    assert.match(out, new RegExp(mergedGames[0].name))
+  })
+
+  test('TTY card mode renders single game without picker', async () => {
+    const writes: string[] = []
+    const { render } = await loadRender()
+    await render(mergedGameDataComplete, {
+      mode: 'card',
+      isTty: true,
+      write: (text: string) => writes.push(text)
+    })
+    const out = writes.join('')
+    assert.match(out, /Identity/)
+    assert.match(out, new RegExp(mergedGameDataComplete.name))
   })
 
   test('uses process.stdout.write when no writer is provided', async () => {

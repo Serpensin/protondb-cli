@@ -5,7 +5,11 @@ import {
   CONFIDENCE_NA,
   TIER_NA,
   confidenceLabel,
-  tierBadge
+  dim,
+  fieldKey,
+  sectionHeader,
+  tierBadge,
+  urlText
 } from '../../lib/presenter/theme.js'
 
 chalk.level = 0
@@ -49,5 +53,23 @@ describe('TIER_NA / CONFIDENCE_NA sentinels', () => {
   test('are plain strings (no blessed tags)', () => {
     assert.equal(TIER_NA, 'N/A')
     assert.equal(CONFIDENCE_NA, 'N/A')
+  })
+})
+
+describe('text helpers', () => {
+  test('fieldKey returns the input text (color disabled)', () => {
+    assert.equal(fieldKey('Tier'), 'Tier')
+  })
+
+  test('dim returns the input text (color disabled)', () => {
+    assert.equal(dim('Minimum'), 'Minimum')
+  })
+
+  test('sectionHeader returns the input text (color disabled)', () => {
+    assert.equal(sectionHeader('Identity'), 'Identity')
+  })
+
+  test('urlText returns the input text (color disabled)', () => {
+    assert.equal(urlText('https://example.com'), 'https://example.com')
   })
 })

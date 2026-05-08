@@ -14,6 +14,7 @@ export interface ProtondbCLIOptions {
   concurrency: number
   disable_cache: boolean
   clear_cache: boolean
+  detail?: boolean
   json?: boolean
 }
 
@@ -21,6 +22,7 @@ const config = getConfig()
 
 function pickMode(opts: ProtondbCLIOptions): RenderMode {
   if (opts.json) return 'json'
+  if (opts.detail) return 'card'
   return 'summary'
 }
 

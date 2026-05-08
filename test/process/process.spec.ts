@@ -73,6 +73,52 @@ describe('start', () => {
     assert.deepEqual((renderCall as RenderCall).data, mergedGames)
   })
 
+  test('routes to render with mode card when --detail is set', async () => {
+    let renderCall: RenderCall | null = null
+    const start = await loadStart({
+      render: async (data: unknown, opts: unknown) => {
+        renderCall = { data, opts: opts as RenderCall['opts'] }
+      }
+    })
+
+    await start({
+      game: 'fifa',
+      verbose: false,
+      hits: 5,
+      concurrency: 2,
+      disable_cache: true,
+      clear_cache: false,
+      detail: true,
+      json: false
+    })
+
+    assert.ok(renderCall, 'render should be called')
+    assert.equal((renderCall as RenderCall).opts.mode, 'card')
+  })
+
+  test('json takes precedence over detail when both are set', async () => {
+    let renderCall: RenderCall | null = null
+    const start = await loadStart({
+      render: async (data: unknown, opts: unknown) => {
+        renderCall = { data, opts: opts as RenderCall['opts'] }
+      }
+    })
+
+    await start({
+      game: 'fifa',
+      verbose: false,
+      hits: 5,
+      concurrency: 2,
+      disable_cache: true,
+      clear_cache: false,
+      detail: true,
+      json: true
+    })
+
+    assert.ok(renderCall, 'render should be called')
+    assert.equal((renderCall as RenderCall).opts.mode, 'json')
+  })
+
   test('routes to render with mode json when --json is set', async () => {
     let renderCall: RenderCall | null = null
     const start = await loadStart({

@@ -1,3 +1,4 @@
+import { formatCard } from './card.js'
 import type { GameData } from './formatter.js'
 import { formatJson } from './json.js'
 import { pickGame } from './picker.js'
@@ -42,7 +43,9 @@ export async function render(
   const game = isArray ? await pickGame(data) : data
 
   if (options.mode === 'card') {
-    throw new Error('render mode "card" not implemented')
+    write(formatCard(game))
+    write('\n')
+    return
   }
 
   write(formatSummary(game))
