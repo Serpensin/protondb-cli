@@ -30,7 +30,11 @@
     "type": "git",
     "url": "git+https://github.com/jegj/protondb-cli.git"
   },
-  "keywords": ["protondb", "cli", "steam"],
+  "keywords": [
+    "protondb",
+    "cli",
+    "steam"
+  ],
   "bin": {
     "protondb-cli": "dist/protondb-cli.js"
   },
@@ -44,7 +48,13 @@
     "undici": "^6.21.3",
     "yargs": "17.7.2"
   },
-  "files": ["dist/", "default.json", "README.md", "LICENSE", "package.json"],
+  "files": [
+    "dist/",
+    "default.json",
+    "README.md",
+    "LICENSE",
+    "package.json"
+  ],
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.8.1",
@@ -55,7 +65,7 @@
     "c8": "^9.1.0",
     "esmock": "^2.6.4",
     "husky": "^8.0.3",
-    "markdownlint-cli2": "^0.18.1",
+    "markdownlint-cli2": "^0.22.1",
     "sinon": "^17.0.1",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0"
