@@ -3,11 +3,11 @@ import { describe, test } from 'node:test'
 import chalk from 'chalk'
 import {
   CONFIDENCE_NA,
-  TIER_NA,
   confidenceLabel,
   dim,
   fieldKey,
   sectionHeader,
+  TIER_NA,
   tierBadge,
   urlText
 } from '../../lib/presenter/theme.js'

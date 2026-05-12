@@ -8,11 +8,7 @@ describe('pickGame', () => {
     let selectCalled = false
     const { pickGame } = await esmock('../../lib/presenter/picker.js', {
       '@clack/prompts': {
-        select: async ({
-          options
-        }: {
-          options: Array<{ value: number }>
-        }) => {
+        select: async ({ options }: { options: Array<{ value: number }> }) => {
           selectCalled = true
           return options[0].value
         },
@@ -29,11 +25,8 @@ describe('pickGame', () => {
   test('returns the chosen game from the picker when N>1', async () => {
     const { pickGame } = await esmock('../../lib/presenter/picker.js', {
       '@clack/prompts': {
-        select: async ({
-          options
-        }: {
-          options: Array<{ value: number }>
-        }) => options[1].value,
+        select: async ({ options }: { options: Array<{ value: number }> }) =>
+          options[1].value,
         isCancel: () => false
       }
     })

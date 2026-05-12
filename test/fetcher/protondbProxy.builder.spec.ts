@@ -31,7 +31,7 @@ describe('protondbProxy.buildUrl', () => {
         url,
         'https://www.protondb.com/proxy/steam/api/appdetails/?appids=1486440'
       )
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -46,7 +46,7 @@ describe('protondbProxy.buildUrl', () => {
         url,
         'https://www.protondb.com/proxy/steam/api/appdetails/?appids=1486440'
       )
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })

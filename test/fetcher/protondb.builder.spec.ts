@@ -27,17 +27,14 @@ describe('protondb.builder', () => {
 
   test('buildHeaderRequest function must return an object with the property "accept" and must be equal to "*/*" for protondb http request', () => {
     const headers = buildHeaderRequest(query)
-    assert(
-      Object.prototype.hasOwnProperty.call(headers, 'accept'),
-      'does not has accept property'
-    )
+    assert(Object.hasOwn(headers, 'accept'), 'does not has accept property')
     assert.equal(headers.accept, '*/*', 'accept property is not equal to */*')
   })
 
   test('buildHeaderRequest function must return an object with the property "authority" and must be equal to "www.protondb.com" for protondb http request', () => {
     const headers = buildHeaderRequest(query)
     assert(
-      Object.prototype.hasOwnProperty.call(headers, 'authority'),
+      Object.hasOwn(headers, 'authority'),
       'does not has authority property'
     )
     assert.equal(
@@ -50,7 +47,7 @@ describe('protondb.builder', () => {
   test('buildHeaderRequest function must return an object with the property "accept-language" and must be equal to "www.protondb.com" for protondb http request', () => {
     const headers = buildHeaderRequest(query)
     assert(
-      Object.prototype.hasOwnProperty.call(headers, 'accept-language'),
+      Object.hasOwn(headers, 'accept-language'),
       'does not has accept-language property'
     )
     assert.equal(
@@ -62,10 +59,7 @@ describe('protondb.builder', () => {
 
   test('buildHeaderRequest function must return an object with the property "referer" and must be equal to "https://www.protondb.com/search?q=" + the query for protondb http request', () => {
     const headers = buildHeaderRequest(query)
-    assert(
-      Object.prototype.hasOwnProperty.call(headers, 'referer'),
-      'does not has referer property'
-    )
+    assert(Object.hasOwn(headers, 'referer'), 'does not has referer property')
     assert.equal(
       headers.referer,
       `https://www.protondb.com/search?q=${query}`,
@@ -77,7 +71,7 @@ describe('protondb.builder', () => {
     const etag = '686897696a7c876b7e'
     const headers = buildHeaderRequest(query, etag)
     assert(
-      Object.prototype.hasOwnProperty.call(headers, 'If-None-Match'),
+      Object.hasOwn(headers, 'If-None-Match'),
       'does not has etag property'
     )
     assert.equal(headers['If-None-Match'], etag, 'etag is not equal')
@@ -122,7 +116,7 @@ describe('protondb.buildUrl', () => {
         'https://www.protondb.com/api/v1/reports/summaries/1486440.json',
         'url is not equal'
       )
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -138,7 +132,7 @@ describe('protondb.buildUrl', () => {
         'https://www.protondb.com/api/v1/reports/summaries/1486440.json',
         'url is not equal'
       )
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })

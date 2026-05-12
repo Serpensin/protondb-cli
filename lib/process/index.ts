@@ -1,7 +1,7 @@
 import { spinner } from '@clack/prompts'
 import type { Low } from 'lowdb'
-import { createCache } from '../cache/index.js'
 import type { CacheData } from '../cache/index.js'
+import { createCache } from '../cache/index.js'
 import getConfig from '../config/index.js'
 import { getGamesReport } from '../core/index.js'
 import type { GameData } from '../presenter/formatter.js'

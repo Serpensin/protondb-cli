@@ -13,7 +13,7 @@ export function checkAlgoliaResponse(
 ): void {
   const response = algoliaResponse as Record<string, unknown>
 
-  if (!Object.prototype.hasOwnProperty.call(response, 'hits')) {
+  if (!Object.hasOwn(response, 'hits')) {
     throw new Error('algolia response does not have "hits" property')
   }
 
@@ -23,7 +23,7 @@ export function checkAlgoliaResponse(
 
   const sampleDate = response.hits[0] as Record<string, unknown>
   requiredProps.forEach((key) => {
-    if (!Object.prototype.hasOwnProperty.call(sampleDate, key)) {
+    if (!Object.hasOwn(sampleDate, key)) {
       throw new Error(`algolia "hit" doesnt have the property "${key}"`)
     }
   })

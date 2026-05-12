@@ -9,8 +9,8 @@ import type { Argv } from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
 import getConfig from './lib/config/index.js'
-import start from './lib/process/index.js'
 import type { ProtondbCLIOptions } from './lib/process/index.js'
+import start from './lib/process/index.js'
 import { isValidGameName } from './lib/utils.js'
 
 const __filename = fileURLToPath(import.meta.url)

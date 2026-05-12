@@ -375,24 +375,18 @@ describe('formatRequirements', async () => {
 
   test('formatRequirements must return an object with the minimum & recommended requirements as a objects always for the first format', () => {
     const result = formatRequirements(dataType1)
+    assert(Object.hasOwn(result, 'minimum'), 'does not has minimun property')
     assert(
-      Object.prototype.hasOwnProperty.call(result, 'minimum'),
-      'does not has minimun property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(result, 'recommended'),
+      Object.hasOwn(result, 'recommended'),
       'does not has recommended property'
     )
   })
 
   test('formatRequirements must return an object with the minimum & recommended requirements as a objects always for the second format', () => {
     const result = formatRequirements(dataType2)
+    assert(Object.hasOwn(result, 'minimum'), 'does not has minimun property')
     assert(
-      Object.prototype.hasOwnProperty.call(result, 'minimum'),
-      'does not has minimun property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(result, 'recommended'),
+      Object.hasOwn(result, 'recommended'),
       'does not has recommended property'
     )
   })
@@ -400,32 +394,17 @@ describe('formatRequirements', async () => {
   test('formatRequirements minimum object must have os, processor, memory, graphics, directx, storage  and additional_notes properties with their respective values for the first format', () => {
     const result = formatRequirements(dataType1)
     const minimum = result.minimum
+    assert(Object.hasOwn(minimum, 'os'), 'does not has os property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'os'),
-      'does not has os property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'processor'),
+      Object.hasOwn(minimum, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(minimum, 'memory'), 'does not has memory property')
+    assert(Object.hasOwn(minimum, 'graphics'), 'does not has graphics property')
+    assert(Object.hasOwn(minimum, 'directx'), 'does not has directx property')
+    assert(Object.hasOwn(minimum, 'storage'), 'does not has storage property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'graphics'),
-      'does not has graphics property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'directx'),
-      'does not has directx property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'storage'),
-      'does not has storage property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'additionalnotes'),
+      Object.hasOwn(minimum, 'additionalnotes'),
       'does not has additionalnotes property'
     )
     assert.equal(minimum.os.text, '64-bit Windows 10')
@@ -442,28 +421,19 @@ describe('formatRequirements', async () => {
   test('formatRequirements minimum object must have os, processor, memory, graphics,  storage  and additional_notes properties with their respective values for the second format', () => {
     const result = formatRequirements(dataType2)
     const minimum = result.minimum
+    assert(Object.hasOwn(minimum, 'os'), 'does not has os property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'os'),
-      'does not has os property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'processor'),
+      Object.hasOwn(minimum, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(minimum, 'memory'), 'does not has memory property')
+    assert(Object.hasOwn(minimum, 'sound'), 'does not has sound property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'sound'),
-      'does not has sound property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'videocard'),
+      Object.hasOwn(minimum, 'videocard'),
       'does not has videocard property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'harddiskspace'),
+      Object.hasOwn(minimum, 'harddiskspace'),
       'does not has harddiskspace property'
     )
     assert.equal(minimum.os.text, 'Windows 7/Vista/XP PC (32 or 64 bit)')
@@ -483,28 +453,22 @@ describe('formatRequirements', async () => {
   test('formatRequirements recommended object must have os, processor, memory, graphics, directx, storage  and additional_notes properties with their respective values for the first format', () => {
     const result = formatRequirements(dataType1)
     const recommended = result.recommended
+    assert(Object.hasOwn(recommended, 'os'), 'does not has os property')
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'os'),
-      'does not has os property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'processor'),
+      Object.hasOwn(recommended, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(recommended, 'memory'), 'does not has memory property')
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'graphics'),
+      Object.hasOwn(recommended, 'graphics'),
       'does not has graphics property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'directx'),
+      Object.hasOwn(recommended, 'directx'),
       'does not has directx property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'additionalnotes'),
+      Object.hasOwn(recommended, 'additionalnotes'),
       'does not has additionalnotes property'
     )
     assert.equal(recommended.os.text, '64-bit Windows 10')
@@ -523,15 +487,12 @@ describe('formatRequirements', async () => {
     const result = formatRequirements(dataType2)
     const recommended = result.recommended
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'processor'),
+      Object.hasOwn(recommended, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(recommended, 'memory'), 'does not has memory property')
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'videocard'),
+      Object.hasOwn(recommended, 'videocard'),
       'does not has videocard property'
     )
     assert.equal(recommended.processor.text, 'Quad-core Intel or AMD CPU')

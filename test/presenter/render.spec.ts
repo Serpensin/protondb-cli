@@ -13,11 +13,8 @@ async function loadRender(overrides: Record<string, unknown> = {}) {
     {},
     {
       '@clack/prompts': {
-        select: async ({
-          options
-        }: {
-          options: Array<{ value: number }>
-        }) => options[0].value,
+        select: async ({ options }: { options: Array<{ value: number }> }) =>
+          options[0].value,
         isCancel: () => false
       },
       ...overrides

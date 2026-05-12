@@ -1,4 +1,4 @@
-import { type GameData, formatRequirements } from './formatter.js'
+import { formatRequirements, type GameData } from './formatter.js'
 import { padRows } from './padder.js'
 import {
   confidenceLabel,

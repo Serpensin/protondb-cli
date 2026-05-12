@@ -72,12 +72,10 @@ const HEADER_REQUEST_TEMPLATE: Record<string, string> = {
 export const buildHeaderRequest = function _builddHeaderRequest(
   headers: Record<string, string>
 ): Record<string, string> {
-  if (!Object.prototype.hasOwnProperty.call(headers, 'x-algolia-api-key')) {
+  if (!Object.hasOwn(headers, 'x-algolia-api-key')) {
     throw new Error('x-algolia-api-key is required for the headers')
   }
-  if (
-    !Object.prototype.hasOwnProperty.call(headers, 'x-algolia-application-id')
-  ) {
+  if (!Object.hasOwn(headers, 'x-algolia-application-id')) {
     throw new Error('x-algolia-application-id is required for the headers')
   }
   return { ...HEADER_REQUEST_TEMPLATE, ...headers }

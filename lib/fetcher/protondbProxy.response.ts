@@ -7,19 +7,19 @@ export function checkProtondbProxyResponse(
 ): void {
   const proxyResponse = protondbProxyResponse as Record<string, unknown>
 
-  if (!Object.prototype.hasOwnProperty.call(proxyResponse, appId)) {
+  if (!Object.hasOwn(proxyResponse, appId)) {
     throw new Error(`protondbproxy response doesnt have the appid "${appId}"`)
   }
 
   const game = proxyResponse[appId] as Record<string, unknown>
 
-  if (!Object.prototype.hasOwnProperty.call(game, 'success') && game.success) {
+  if (!Object.hasOwn(game, 'success') && game.success) {
     throw new Error(
       'protondbproxy game response doesnt have a valid success property'
     )
   }
 
-  if (!Object.prototype.hasOwnProperty.call(game, 'data')) {
+  if (!Object.hasOwn(game, 'data')) {
     throw new Error(
       'protondbproxy game response doesnt have a valid game property'
     )
@@ -28,7 +28,7 @@ export function checkProtondbProxyResponse(
   const gameData = game.data as Record<string, unknown>
 
   requiredProps.forEach((key) => {
-    if (!Object.prototype.hasOwnProperty.call(gameData, key)) {
+    if (!Object.hasOwn(gameData, key)) {
       throw new Error(
         `protondbproxy response doesnt have the property "${key}"`
       )
@@ -46,11 +46,11 @@ export function checkProtondbProxyResponse(
     unknown
   >
 
-  if (!Object.prototype.hasOwnProperty.call(sampleGenre, 'description')) {
+  if (!Object.hasOwn(sampleGenre, 'description')) {
     throw new Error('genre object does not have the description property')
   }
 
-  if (!Object.prototype.hasOwnProperty.call(sampleRecommendations, 'total')) {
+  if (!Object.hasOwn(sampleRecommendations, 'total')) {
     throw new Error('recommendation object does not have the total property')
   }
 }
