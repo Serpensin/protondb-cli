@@ -21,6 +21,19 @@
 
 * upgrade deps and force release ([1ce81ae](https://github.com/jegj/protondb-cli/commit/1ce81ae7056a12a56a6d16acfcc5c03a62ca25ab))
 
+## [2.0.0](https://github.com/jegj/protondb-cli/compare/v1.16.0...v2.0.0) (2026-05-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **presenter:** picker + summary as TTY default, drop blessed/ora
+
+### Features
+
+* **presenter:** add --detail card mode with sectioned renderer ([3f845d8](https://github.com/jegj/protondb-cli/commit/3f845d86deb5314e2010231509a7ad14a2774460))
+* **presenter:** picker + summary as TTY default, drop blessed/ora ([9a511b8](https://github.com/jegj/protondb-cli/commit/9a511b8bc74899442e878d0378e40b5ca76cbc49)), closes [#111](https://github.com/jegj/protondb-cli/issues/111)
+* **presenter:** wire --json flag end-to-end (tracer bullet) ([7cc63f7](https://github.com/jegj/protondb-cli/commit/7cc63f70a40439ee24622c91ea1d3aa79c0af163)), closes [#110](https://github.com/jegj/protondb-cli/issues/110) [#109](https://github.com/jegj/protondb-cli/issues/109)
+
 ## [1.16.0](https://github.com/jegj/protondb-cli/compare/v1.15.0...v1.16.0) (2026-04-29)
 
 
