@@ -57,8 +57,8 @@ export function createMergedGame(opts: MergedGameOptions): MergedGame {
   if (!opts.confidence) throw new Error('mock game object needs confidence')
   if (!opts.tier) throw new Error('mock game object needs tier')
   return {
-    lastUpdated: opts.lastUpdated ?? +new Date(),
-    name: opts.name ?? `game ${+new Date()}`,
+    lastUpdated: opts.lastUpdated ?? Date.now(),
+    name: opts.name ?? `game ${Date.now()}`,
     oslist: opts.oslist ?? ['Windows', 'macOS', 'Linux', 'Steam Deck Playable'],
     userScore: opts.userScore ?? random(5.5, 98.5),
     followers: opts.followers ?? random(20, 9000),

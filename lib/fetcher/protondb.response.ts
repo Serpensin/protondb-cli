@@ -13,7 +13,7 @@ export function checkProtondbResponse(
 ): void {
   const response = protondbResponse as Record<string, unknown>
   requiredProps.forEach((key) => {
-    if (!Object.prototype.hasOwnProperty.call(response, key)) {
+    if (!Object.hasOwn(response, key)) {
       throw new Error(`protondb response doesnt have the property "${key}"`)
     }
   })

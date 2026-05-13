@@ -1,16 +1,10 @@
 import assert from 'node:assert'
 import { describe, test } from 'node:test'
-import {
-  GAME_NA,
-  TAG_CONFIDENCE,
-  TAG_TIERS
-} from '../../lib/presenter/formats.js'
+import chalk from 'chalk'
 import {
   format,
   formatGame,
-  formatGameConfidence,
   formatGameName,
-  formatGameTier,
   formatRequirements,
   generateRequirementsEntries,
   sortGames,
@@ -23,6 +17,8 @@ import {
   mergedGames
 } from '../mock/index.mock.js'
 
+chalk.level = 0
+
 describe('formatGame', async () => {
   test('formatGame must return an array always', () => {
     const result = formatGame(mergedGameDataComplete)
@@ -34,27 +30,16 @@ describe('formatGame', async () => {
     assert.equal(result[0], formatGameName(mergedGameDataComplete.name))
   })
 
-  test("2th item must be the game's tier if there are result from protondb API", () => {
+  test('returns [name, tier, confidence] as plain strings when chalk is disabled', () => {
     const result = formatGame(mergedGameDataComplete)
-    assert.equal(result[1], formatGameTier(mergedGameDataComplete.tier))
+    assert.equal(result[1], mergedGameDataComplete.tier)
+    assert.equal(result[2], mergedGameDataComplete.confidence)
   })
 
-  test("3th item must be the game's confidence if there are result from protondb API", () => {
-    const result = formatGame(mergedGameDataComplete)
-    assert.equal(
-      result[2],
-      formatGameConfidence(mergedGameDataComplete.confidence)
-    )
-  })
-
-  test('2th item must be equal to "{gray-fg}N/A{/gray-fg}" if the has not result from protondb API', () => {
+  test('returns plain N/A (no blessed tags) when protondb data is missing', () => {
     const result = formatGame(mergedGameDataUncomplete)
-    assert.equal(result[1], GAME_NA)
-  })
-
-  test('3th item must be equal to "{gray-fg}N/A{/gray-fg}" if the has not result from protondb API', () => {
-    const result = formatGame(mergedGameDataUncomplete)
-    assert.equal(result[2], GAME_NA)
+    assert.equal(result[1], 'N/A')
+    assert.equal(result[2], 'N/A')
   })
 })
 
@@ -87,75 +72,6 @@ describe('formatGameName', async () => {
   })
 })
 
-describe('formatGameTier', async () => {
-  test('formatGameTier must return the silver tier with the respective tag for font color', () => {
-    const result = formatGameTier('silver')
-    assert.equal(result, TAG_TIERS.silver.description)
-  })
-
-  test('formatGameTier must return the gold tier with the respective tag for font color', () => {
-    const result = formatGameTier('gold')
-    assert.equal(result, TAG_TIERS.gold.description)
-  })
-
-  test('formatGameTier must return the bronze tier with the respective tag for font color', () => {
-    const result = formatGameTier('bronze')
-    assert.equal(result, TAG_TIERS.bronze.description)
-  })
-
-  test('formatGameTier must return the platinum tier with the respective tag for font color', () => {
-    const result = formatGameTier('platinum')
-    assert.equal(result, TAG_TIERS.platinum.description)
-  })
-
-  test('formatGameTier must return the borked tier with the respective tag for font color', () => {
-    const result = formatGameTier('borked')
-    assert.equal(result, TAG_TIERS.borked.description)
-  })
-
-  test('formatGameTier must return the pending tier with the respective tag for font color', () => {
-    const result = formatGameTier('pending')
-    assert.equal(result, TAG_TIERS.pending.description)
-  })
-
-  test('formatGameTier must return the tier without the tag if the tier is unknow', () => {
-    const result = formatGameTier('new_tier')
-    assert.equal(result, 'new_tier')
-  })
-})
-
-describe('formatGameConfidence', async () => {
-  test('formatGameConfidence must return inadequate confidence with the respective tag for font color', () => {
-    const result = formatGameConfidence('inadequate')
-    assert.equal(result, TAG_CONFIDENCE.inadequate.description)
-  })
-
-  test('formatGameConfidence must return low confidence with the respective tag for font color', () => {
-    const result = formatGameConfidence('low')
-    assert.equal(result, TAG_CONFIDENCE.low.description)
-  })
-
-  test('formatGameConfidence must return moderate confidence with the respective tag for font color', () => {
-    const result = formatGameConfidence('moderate')
-    assert.equal(result, TAG_CONFIDENCE.moderate.description)
-  })
-
-  test('formatGameConfidence must return good confidence with the respective tag for font color', () => {
-    const result = formatGameConfidence('good')
-    assert.equal(result, TAG_CONFIDENCE.good.description)
-  })
-
-  test('formatGameConfidence must return strong confidence with the respective tag for font color', () => {
-    const result = formatGameConfidence('strong')
-    assert.equal(result, TAG_CONFIDENCE.strong.description)
-  })
-
-  test('formatGameConfidence must return the confidence without the tag if the confidence is unknow', () => {
-    const result = formatGameConfidence('new_confidence')
-    assert.equal(result, 'new_confidence')
-  })
-})
-
 describe('sortGames', async () => {
   test('sorting just one game', () => {
     const games = [createMergedGame({ tier: 'silver', confidence: 'strong' })]
@@ -164,7 +80,7 @@ describe('sortGames', async () => {
   })
 
   test('N/A games have the lowest priority for the sorting', () => {
-    const naGame = createMergedGame({ tier: GAME_NA, confidence: 'strong' })
+    const naGame = createMergedGame({ tier: 'N/A', confidence: 'strong' })
     const silverGame = createMergedGame({
       tier: 'silver',
       confidence: 'strong'
@@ -175,7 +91,7 @@ describe('sortGames', async () => {
   })
 
   test('pending games have the first low priority for the sorting', () => {
-    const naGame = createMergedGame({ tier: GAME_NA, confidence: 'strong' })
+    const naGame = createMergedGame({ tier: 'N/A', confidence: 'strong' })
     const pendingGame = createMergedGame({
       tier: 'pending',
       confidence: 'strong'
@@ -190,7 +106,7 @@ describe('sortGames', async () => {
   })
 
   test('borked games have the 2th low priority for the sorting', () => {
-    const naGame = createMergedGame({ tier: GAME_NA, confidence: 'strong' })
+    const naGame = createMergedGame({ tier: 'N/A', confidence: 'strong' })
     const pendingGame = createMergedGame({
       tier: 'pending',
       confidence: 'strong'
@@ -209,7 +125,7 @@ describe('sortGames', async () => {
   })
 
   test('bronze games have the 2th lower priority for the sorting', () => {
-    const naGame = createMergedGame({ tier: GAME_NA, confidence: 'strong' })
+    const naGame = createMergedGame({ tier: 'N/A', confidence: 'strong' })
     const pendingGame = createMergedGame({
       tier: 'pending',
       confidence: 'strong'
@@ -228,7 +144,7 @@ describe('sortGames', async () => {
   })
 
   test('silver games have the 3th lower priority for the sorting', () => {
-    const naGame = createMergedGame({ tier: GAME_NA, confidence: 'strong' })
+    const naGame = createMergedGame({ tier: 'N/A', confidence: 'strong' })
     const pendingGame = createMergedGame({
       tier: 'pending',
       confidence: 'strong'
@@ -247,7 +163,7 @@ describe('sortGames', async () => {
   })
 
   test('gold games have the 4th lower priority for the sorting', () => {
-    const naGame = createMergedGame({ tier: GAME_NA, confidence: 'strong' })
+    const naGame = createMergedGame({ tier: 'N/A', confidence: 'strong' })
     const pendingGame = createMergedGame({
       tier: 'pending',
       confidence: 'strong'
@@ -273,7 +189,7 @@ describe('sortGames', async () => {
   })
 
   test('platinum games have the 5th lower priority for the sorting', () => {
-    const naGame = createMergedGame({ tier: GAME_NA, confidence: 'strong' })
+    const naGame = createMergedGame({ tier: 'N/A', confidence: 'strong' })
     const pendingGame = createMergedGame({
       tier: 'pending',
       confidence: 'strong'
@@ -459,24 +375,18 @@ describe('formatRequirements', async () => {
 
   test('formatRequirements must return an object with the minimum & recommended requirements as a objects always for the first format', () => {
     const result = formatRequirements(dataType1)
+    assert(Object.hasOwn(result, 'minimum'), 'does not has minimun property')
     assert(
-      Object.prototype.hasOwnProperty.call(result, 'minimum'),
-      'does not has minimun property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(result, 'recommended'),
+      Object.hasOwn(result, 'recommended'),
       'does not has recommended property'
     )
   })
 
   test('formatRequirements must return an object with the minimum & recommended requirements as a objects always for the second format', () => {
     const result = formatRequirements(dataType2)
+    assert(Object.hasOwn(result, 'minimum'), 'does not has minimun property')
     assert(
-      Object.prototype.hasOwnProperty.call(result, 'minimum'),
-      'does not has minimun property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(result, 'recommended'),
+      Object.hasOwn(result, 'recommended'),
       'does not has recommended property'
     )
   })
@@ -484,32 +394,17 @@ describe('formatRequirements', async () => {
   test('formatRequirements minimum object must have os, processor, memory, graphics, directx, storage  and additional_notes properties with their respective values for the first format', () => {
     const result = formatRequirements(dataType1)
     const minimum = result.minimum
+    assert(Object.hasOwn(minimum, 'os'), 'does not has os property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'os'),
-      'does not has os property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'processor'),
+      Object.hasOwn(minimum, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(minimum, 'memory'), 'does not has memory property')
+    assert(Object.hasOwn(minimum, 'graphics'), 'does not has graphics property')
+    assert(Object.hasOwn(minimum, 'directx'), 'does not has directx property')
+    assert(Object.hasOwn(minimum, 'storage'), 'does not has storage property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'graphics'),
-      'does not has graphics property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'directx'),
-      'does not has directx property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'storage'),
-      'does not has storage property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'additionalnotes'),
+      Object.hasOwn(minimum, 'additionalnotes'),
       'does not has additionalnotes property'
     )
     assert.equal(minimum.os.text, '64-bit Windows 10')
@@ -526,28 +421,19 @@ describe('formatRequirements', async () => {
   test('formatRequirements minimum object must have os, processor, memory, graphics,  storage  and additional_notes properties with their respective values for the second format', () => {
     const result = formatRequirements(dataType2)
     const minimum = result.minimum
+    assert(Object.hasOwn(minimum, 'os'), 'does not has os property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'os'),
-      'does not has os property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'processor'),
+      Object.hasOwn(minimum, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(minimum, 'memory'), 'does not has memory property')
+    assert(Object.hasOwn(minimum, 'sound'), 'does not has sound property')
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'sound'),
-      'does not has sound property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'videocard'),
+      Object.hasOwn(minimum, 'videocard'),
       'does not has videocard property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(minimum, 'harddiskspace'),
+      Object.hasOwn(minimum, 'harddiskspace'),
       'does not has harddiskspace property'
     )
     assert.equal(minimum.os.text, 'Windows 7/Vista/XP PC (32 or 64 bit)')
@@ -567,28 +453,22 @@ describe('formatRequirements', async () => {
   test('formatRequirements recommended object must have os, processor, memory, graphics, directx, storage  and additional_notes properties with their respective values for the first format', () => {
     const result = formatRequirements(dataType1)
     const recommended = result.recommended
+    assert(Object.hasOwn(recommended, 'os'), 'does not has os property')
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'os'),
-      'does not has os property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'processor'),
+      Object.hasOwn(recommended, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(recommended, 'memory'), 'does not has memory property')
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'graphics'),
+      Object.hasOwn(recommended, 'graphics'),
       'does not has graphics property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'directx'),
+      Object.hasOwn(recommended, 'directx'),
       'does not has directx property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'additionalnotes'),
+      Object.hasOwn(recommended, 'additionalnotes'),
       'does not has additionalnotes property'
     )
     assert.equal(recommended.os.text, '64-bit Windows 10')
@@ -607,15 +487,12 @@ describe('formatRequirements', async () => {
     const result = formatRequirements(dataType2)
     const recommended = result.recommended
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'processor'),
+      Object.hasOwn(recommended, 'processor'),
       'does not has processor property'
     )
+    assert(Object.hasOwn(recommended, 'memory'), 'does not has memory property')
     assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'memory'),
-      'does not has memory property'
-    )
-    assert(
-      Object.prototype.hasOwnProperty.call(recommended, 'videocard'),
+      Object.hasOwn(recommended, 'videocard'),
       'does not has videocard property'
     )
     assert.equal(recommended.processor.text, 'Quad-core Intel or AMD CPU')

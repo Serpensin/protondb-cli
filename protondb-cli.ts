@@ -9,8 +9,8 @@ import type { Argv } from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import yargs from 'yargs/yargs'
 import getConfig from './lib/config/index.js'
-import start from './lib/process/index.js'
 import type { ProtondbCLIOptions } from './lib/process/index.js'
+import start from './lib/process/index.js'
 import { isValidGameName } from './lib/utils.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -67,11 +67,27 @@ const protondbCLI = yargs(argv)
           description: 'Clean up the local cache',
           default: false
         })
+        .option('detail', {
+          alias: 'd',
+          type: 'boolean',
+          description: 'Show the full sectioned card instead of the summary',
+          default: false
+        })
+        .option('json', {
+          type: 'boolean',
+          description: 'Emit JSON output (no color, no picker)',
+          default: false
+        })
         .example([
           [
             '$0 gta --concurrency 5 --hits 15',
             'Search the last 15 like gta using a conccurency of 5'
-          ]
+          ],
+          [
+            '$0 "Half-Life" --detail',
+            'Show the full sectioned card after picking'
+          ],
+          ['$0 fifa --json | jq .[0].name', 'Emit JSON for scripting']
         ])
         .fail((msg: string, err: Error, yargsHelper: Argv) => {
           if (

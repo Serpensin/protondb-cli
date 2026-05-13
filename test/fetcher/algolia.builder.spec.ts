@@ -19,19 +19,13 @@ test('buildBodyRequest function must return an object always', () => {
 
 test('buildBodyRequest function must return an object with the property "method" and must be equal to POST by default', () => {
   const response = buildBodyRequest({ query: qry })
-  assert(
-    Object.prototype.hasOwnProperty.call(response, 'method'),
-    'does not has method property'
-  )
+  assert(Object.hasOwn(response, 'method'), 'does not has method property')
   assert.equal(response.method, 'POST', 'method property is not equal to POST')
 })
 
 test('buildBodyRequest function must return an object with the property "body" and must be an object always', () => {
   const response = buildBodyRequest({ query: qry })
-  assert(
-    Object.prototype.hasOwnProperty.call(response, 'body'),
-    'does not has query body'
-  )
+  assert(Object.hasOwn(response, 'body'), 'does not has query body')
   assert.equal(
     typeof response.body === 'object',
     true,
@@ -42,7 +36,7 @@ test('buildBodyRequest function must return an object with the property "body" a
 test('buildBodyRequest function must return an object with the body property and must has the query property based on the argument', () => {
   const response = buildBodyRequest({ query: qry })
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'query'),
+    Object.hasOwn(response.body, 'query'),
     'body does not has query property'
   )
 })
@@ -50,10 +44,7 @@ test('buildBodyRequest function must return an object with the body property and
 test('buildBodyRequest function must return an object with the body property and must has the attributesToHighlight property and must be an empty array as default', () => {
   const response = buildBodyRequest({ query: qry })
   assert(
-    Object.prototype.hasOwnProperty.call(
-      response.body,
-      'attributesToHighlight'
-    ),
+    Object.hasOwn(response.body, 'attributesToHighlight'),
     'body does not has attributesToHighlight property'
   )
   assert(Array.isArray(response.body.attributesToHighlight))
@@ -63,7 +54,7 @@ test('buildBodyRequest function must return an object with the body property and
 test('buildBodyRequest function must return an object with the body property and must has the attributesToSnippet property and must be an empty array as default', () => {
   const response = buildBodyRequest({ query: qry })
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'attributesToSnippet'),
+    Object.hasOwn(response.body, 'attributesToSnippet'),
     'body does not has attributesToSnippet property'
   )
   assert(
@@ -80,7 +71,7 @@ test('buildBodyRequest function must return an object with the body property and
 test('buildBodyRequest function must return an object with the body property and must has the facets property and must be an array with tags as the only value as default', () => {
   const response = buildBodyRequest({ query: qry })
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'facets'),
+    Object.hasOwn(response.body, 'facets'),
     'body does not has facets property'
   )
   assert(Array.isArray(response.body.facets), 'facets is not an array')
@@ -95,7 +86,7 @@ test('buildBodyRequest function must return an object with the body property and
 test('buildBodyRequest function must return an object with body property and must has the facetFilters property and must be an array with one value( another array, appType:Game) as default value', () => {
   const response = buildBodyRequest({ query: qry })
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'facetFilters'),
+    Object.hasOwn(response.body, 'facetFilters'),
     'body does not has facetFilters property'
   )
   assert(
@@ -117,7 +108,7 @@ test('buildBodyRequest function must return an object with body property and mus
 test('buildBodyRequest function must return an object the body property and must has the hitsPerPage property and must be equal to 50 as default', () => {
   const response = buildBodyRequest({ query: qry })
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'hitsPerPage'),
+    Object.hasOwn(response.body, 'hitsPerPage'),
     'body does not has hitsPerPage property'
   )
   assert.equal(response.body.hitsPerPage, 50, 'hitsPerPage is not equal to 50')
@@ -127,7 +118,7 @@ test('buildBodyRequest acept custom values for the hitsPerPage property', () => 
   const hitsPerPage = 20
   const response = buildBodyRequest({ query: qry, hitsPerPage })
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'hitsPerPage'),
+    Object.hasOwn(response.body, 'hitsPerPage'),
     'body does not has hitsPerPage property'
   )
   assert.equal(
@@ -151,7 +142,7 @@ test('buildBodyRequest function must return an object with the body property and
     'userScore'
   ]
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'attributesToRetrieve'),
+    Object.hasOwn(response.body, 'attributesToRetrieve'),
     'body does not has attributesToRetrieve property'
   )
   assert(
@@ -168,7 +159,7 @@ test('buildBodyRequest function must return an object with the body property and
 test('buildBodyRequest function must return an object with the body property and must has the page property and must be 0 as default', () => {
   const response = buildBodyRequest({ query: qry })
   assert(
-    Object.prototype.hasOwnProperty.call(response.body, 'page'),
+    Object.hasOwn(response.body, 'page'),
     'body does not has page property'
   )
   assert.equal(response.body.page, 0)
@@ -181,17 +172,14 @@ test('buildHeaderRequest function must return an object always', () => {
 
 test('buildHeaderRequest function must return an object with the property "accept" and must be equal to "*/*" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
-  assert(
-    Object.prototype.hasOwnProperty.call(headers, 'accept'),
-    'does not has accept property'
-  )
+  assert(Object.hasOwn(headers, 'accept'), 'does not has accept property')
   assert.equal(headers.accept, '*/*', 'accept property is not equal to */*')
 })
 
 test('buildHeaderRequest function must return an object with the property "accept-language" and must be equal to "application/x-www-form-urlencoded" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
   assert(
-    Object.prototype.hasOwnProperty.call(headers, 'accept-language'),
+    Object.hasOwn(headers, 'accept-language'),
     'does not has accept-language property'
   )
   assert.equal(
@@ -204,7 +192,7 @@ test('buildHeaderRequest function must return an object with the property "accep
 test('buildHeaderRequest function must return an object with the property "content-type" and must be equal to "application/x-www-form-urlencoded" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
   assert(
-    Object.prototype.hasOwnProperty.call(headers, 'content-type'),
+    Object.hasOwn(headers, 'content-type'),
     'does not has content-type property'
   )
   assert.equal(
@@ -216,10 +204,7 @@ test('buildHeaderRequest function must return an object with the property "conte
 
 test('buildHeaderRequest function must return an object with the property "referer" and must be equal to "https://www.protondb.com" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
-  assert(
-    Object.prototype.hasOwnProperty.call(headers, 'referer'),
-    'does not has referer property'
-  )
+  assert(Object.hasOwn(headers, 'referer'), 'does not has referer property')
   assert.equal(
     headers.referer,
     'https://www.protondb.com',
@@ -229,10 +214,7 @@ test('buildHeaderRequest function must return an object with the property "refer
 
 test('buildHeaderRequest function must return an object with the property "origin" and must be equal to "https://www.protondb.com" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
-  assert(
-    Object.prototype.hasOwnProperty.call(headers, 'origin'),
-    'does not has origin property'
-  )
+  assert(Object.hasOwn(headers, 'origin'), 'does not has origin property')
   assert.equal(
     headers.origin,
     'https://www.protondb.com',
@@ -243,7 +225,7 @@ test('buildHeaderRequest function must return an object with the property "origi
 test('buildHeaderRequest function must return an object with the property "connection" and must be equal to "keep-alive" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
   assert(
-    Object.prototype.hasOwnProperty.call(headers, 'connection'),
+    Object.hasOwn(headers, 'connection'),
     'does not has connection property'
   )
   assert.equal(
@@ -268,7 +250,7 @@ test('buildHeaderRequest function must throw an Error when the "x-algolia-api-ke
 test('buildHeaderRequest function must return an object with the property "x-algolia-api-key" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
   assert(
-    Object.prototype.hasOwnProperty.call(headers, 'x-algolia-api-key'),
+    Object.hasOwn(headers, 'x-algolia-api-key'),
     'does not has x-algolia-api-key property'
   )
   assert.equal(
@@ -293,7 +275,7 @@ test('buildHeaderRequest function must throw an Error when the "x-algolia-applic
 test('buildHeaderRequest function must return an object with the property "x-algolia-application-id" for algolia http request', () => {
   const headers = buildHeaderRequest(dheaders)
   assert(
-    Object.prototype.hasOwnProperty.call(headers, 'x-algolia-application-id'),
+    Object.hasOwn(headers, 'x-algolia-application-id'),
     'does not has x-algolia-application-id property'
   )
   assert.equal(

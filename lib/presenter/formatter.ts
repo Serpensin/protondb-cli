@@ -1,5 +1,5 @@
 import { type HTMLElement as NHPElement, parse } from 'node-html-parser'
-import { GAME_NA, TAG_CONFIDENCE, TAG_TIERS } from './formats.js'
+import { confidenceLabel, tierBadge } from './theme.js'
 
 export interface RequirementEntry {
   title: string
@@ -74,29 +74,14 @@ export function sortGames(games: GameData[]): GameData[] {
 }
 
 export function formatGame(game: GameData): string[] {
-  let tier = game.tier ? formatGameTier(game.tier) : ''
-  let confidence = game.confidence ? formatGameConfidence(game.confidence) : ''
   if (game.protondbNotFound) {
-    tier = GAME_NA
-    confidence = GAME_NA
+    return [formatGameName(game.name), 'N/A', 'N/A']
   }
-  return [formatGameName(game.name), tier, confidence]
-}
-
-export function formatGameTier(tier: string): string {
-  const symbol = TAG_TIERS[tier]
-  if (symbol) {
-    return symbol.description as string
-  }
-  return tier
-}
-
-export function formatGameConfidence(confidence: string): string {
-  const symbol = TAG_CONFIDENCE[confidence]
-  if (symbol) {
-    return symbol.description as string
-  }
-  return confidence
+  return [
+    formatGameName(game.name),
+    tierBadge(game.tier),
+    confidenceLabel(game.confidence)
+  ]
 }
 
 export function formatGameName(name: string, limit = 35): string {

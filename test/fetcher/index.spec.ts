@@ -106,11 +106,11 @@ describe('algoliaFetcher', async () => {
         algoliaApiKey: 'x1x11212',
         algoliaApplicationId: 'X2123ZAS123'
       })
-      assert(
-        Object.prototype.hasOwnProperty.call(result, 'hits'),
-        'does not has hits property'
-      )
-    } catch (error) {
+      if (!result || typeof result !== 'object') {
+        assert.fail('expected object result')
+      }
+      assert(Object.hasOwn(result, 'hits'), 'does not has hits property')
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -169,7 +169,7 @@ describe('protondbFetcher', async () => {
         logger
       )
       assert.equal(result, null)
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -197,7 +197,7 @@ describe('protondbFetcher', async () => {
         logger
       )
       assert(logger.warn.calledOnce, 'logger is not being called')
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -229,7 +229,7 @@ describe('protondbFetcher', async () => {
         false,
         'logger is being called when verbose is false'
       )
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -254,7 +254,7 @@ describe('protondbFetcher', async () => {
         logger
       )
       assert.equal(result, null)
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -273,31 +273,23 @@ describe('protondbFetcher', async () => {
         objectId: '1486440',
         url: 'https://www.protondb.com/api/v1/reports/summaries'
       })
+      assert(result, 'expected non-null result')
       assert(
-        Object.prototype.hasOwnProperty.call(result, 'bestReportedTier'),
+        Object.hasOwn(result, 'bestReportedTier'),
         'does not has bestReportedTier property'
       )
       assert(
-        Object.prototype.hasOwnProperty.call(result, 'confidence'),
+        Object.hasOwn(result, 'confidence'),
         'does not has confidence property'
       )
+      assert(Object.hasOwn(result, 'score'), 'does not has score property')
+      assert(Object.hasOwn(result, 'tier'), 'does not has tier property')
+      assert(Object.hasOwn(result, 'total'), 'does not has total property')
       assert(
-        Object.prototype.hasOwnProperty.call(result, 'score'),
-        'does not has score property'
-      )
-      assert(
-        Object.prototype.hasOwnProperty.call(result, 'tier'),
-        'does not has tier property'
-      )
-      assert(
-        Object.prototype.hasOwnProperty.call(result, 'total'),
-        'does not has total property'
-      )
-      assert(
-        Object.prototype.hasOwnProperty.call(result, 'trendingTier'),
+        Object.hasOwn(result, 'trendingTier'),
         'does not has trendingTier property'
       )
-    } catch (error) {
+    } catch (_error) {
       assert.fail('error is not expected')
     }
   })
@@ -323,7 +315,7 @@ describe('protondbFetcher', async () => {
       cache
     })
     assert(
-      Object.prototype.hasOwnProperty.call(cache.data.etags, '1486440'),
+      Object.hasOwn(cache.data.etags, '1486440'),
       'cache must have a new entry from the server'
     )
   })
@@ -525,10 +517,10 @@ describe('protondbProxyFetcher', async () => {
       appid: 72850,
       url: 'https://www.protondb.com/proxy/steam/api/appdetails'
     })
-    assert(
-      Object.prototype.hasOwnProperty.call(result, '72850'),
-      'does not has the appid property'
-    )
+    if (!result || typeof result !== 'object') {
+      assert.fail('expected object result')
+    }
+    assert(Object.hasOwn(result, '72850'), 'does not has the appid property')
   })
 
   test('protondbProxyFetcher must return null if there is problem requesting data to protondbProxy API and must logged it when verbose is on', async () => {

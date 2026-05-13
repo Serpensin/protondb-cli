@@ -15,15 +15,15 @@ describe('cache', async () => {
   test('createCache method must return always a lowdb cache object which contains the data property with all the protondb-cli keys', async () => {
     const cache = await createCache(testCacheFolder)
     assert(
-      Object.prototype.hasOwnProperty.call(cache, 'data'),
+      Object.hasOwn(cache, 'data'),
       'cache does not have the data property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(cache.data, 'etags'),
+      Object.hasOwn(cache.data, 'etags'),
       'cache data does not have the etags property'
     )
     assert(
-      Object.prototype.hasOwnProperty.call(cache.data, 'games'),
+      Object.hasOwn(cache.data, 'games'),
       'cache data does not have the games property'
     )
   })
