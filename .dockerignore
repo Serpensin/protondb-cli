@@ -2,11 +2,10 @@ test/
 poc/
 vagrant/
 node_modules/
+dist/
 docs/
 coverage/
 .github/
 .editorconfig
-.eslintignore
-.eslintrc.json
 .gitignore
 *.log
