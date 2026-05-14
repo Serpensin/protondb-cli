@@ -41,3 +41,5 @@
 - DONE: Replace blessed full-screen TUI with inline @clack/prompts picker + printed summary
 - DONE: Drop blessed/@types/blessed/ora dependencies
 - TODO: Some game have a different key for the requirements e.g Half life 2, COunter strike
+- DONE: Fix docker build, it does not work
+- DONE: Fix npm debug script
