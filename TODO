@@ -42,4 +42,4 @@
 - DONE: Drop blessed/@types/blessed/ora dependencies
 - TODO: Some game have a different key for the requirements e.g Half life 2, COunter strike
 - DONE: Fix docker build, it does not work
-- TODO: Fix npm debug script
+- DONE: Fix npm debug script
