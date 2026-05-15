@@ -21,6 +21,13 @@
 
 * upgrade deps and force release ([1ce81ae](https://github.com/jegj/protondb-cli/commit/1ce81ae7056a12a56a6d16acfcc5c03a62ca25ab))
 
+## [2.0.1](https://github.com/jegj/protondb-cli/compare/v2.0.0...v2.0.1) (2026-05-15)
+
+
+### Bug Fixes
+
+* upgrade html parse deps to fix parsing errors ([8d9c0f9](https://github.com/jegj/protondb-cli/commit/8d9c0f943c8420807056fceba388505a7be52d8c))
+
 ## [2.0.0](https://github.com/jegj/protondb-cli/compare/v1.16.0...v2.0.0) (2026-05-13)
 
 
